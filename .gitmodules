@@ -1,0 +1,3 @@
+[submodule "Submodules/aws-sdk-ios"]
+	path = Submodules/aws-sdk-ios
+	url = https://github.com/aws/aws-sdk-ios.git
