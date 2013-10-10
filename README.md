@@ -25,8 +25,8 @@ In "Build Phases" add OWS3Client to your Target Dependencies, and libOWS3Client.
 	NSString *filePath = @"/path/to/file.txt";
 	NSString *bucketName = @"bucket-name";
 	NSString *key = @"file.txt";
-    [[OWS3Client alloc] initWithAccessKey:AWS_ACCESS_KEY_ID secretKey:AWS_SECRET_KEY];
-    [[OWSharedS3Client sharedClient] postObjectWithFile:filePath bucket:bucketName key:key acl:@"public-read" success:^(S3PutObjectResponse *responseObject) {
+    OWS3Client *s3Client = [[OWS3Client alloc] initWithAccessKey:AWS_ACCESS_KEY_ID secretKey:AWS_SECRET_KEY];
+    [s3Client postObjectWithFile:filePath bucket:bucketName key:key acl:@"public-read" success:^(S3PutObjectResponse *responseObject) {
                             NSLog(@"success updating manifest after uploading %@", outputFileName);
                         } failure:^(NSError *error) {
                             NSLog(@"error uplaoding manifest after %@", outputFileName);
