@@ -16,7 +16,7 @@
         // Initial the S3 Client.
         // Logging Control - Do NOT use logging for non-development builds.
 #ifdef DEBUG
-        [AmazonLogger verboseLogging];
+        [AmazonLogger basicLogging];
 #else
         [AmazonLogger turnLoggingOff];
 #endif
@@ -43,6 +43,40 @@
 - (void) setUseSSL:(BOOL)_useSSL {
     useSSL = _useSSL;
     [self refreshEndpoint];
+}
+
+- (void) postObjectWithData:(NSData *)data bucket:(NSString *)bucket key:(NSString *)key acl:(NSString *)acl success:(void (^)(S3PutObjectResponse *))success failure:(void (^)(NSError *))failure {
+    dispatch_async(networkQueue, ^{
+        // Upload image data.  Remember to set the content type.
+        S3PutObjectRequest *por = [[S3PutObjectRequest alloc] initWithKey:key inBucket:bucket];
+        por.data  = data;
+        
+        S3CannedACL *cannedACL = nil;
+        if (acl) {
+            cannedACL = [[S3CannedACL alloc] initWithStringValue:acl];
+        } else {
+            cannedACL = [S3CannedACL publicRead];
+        }
+        por.cannedACL = cannedACL;
+        
+        // Put the image data into the specified s3 bucket and object.
+        S3PutObjectResponse *putObjectResponse = [self.s3 putObject:por];
+        
+        if (putObjectResponse.error) {
+            if (failure) {
+                dispatch_async(callbackQueue, ^{
+                    failure(putObjectResponse.error);
+                });
+            }
+            return;
+        }
+        
+        if (success) {
+            dispatch_async(callbackQueue, ^{
+                success(putObjectResponse);
+            });
+        }
+    });
 }
 
 - (void)postObjectWithFile:(NSString *)path

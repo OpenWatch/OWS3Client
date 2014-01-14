@@ -36,4 +36,21 @@
                        acl:(NSString*)acl
                    success:(void (^)(S3PutObjectResponse *responseObject))success
                    failure:(void (^)(NSError *error))failure;
+
+/**
+ Adds an object to a bucket using forms.
+ 
+ @param data The data you want to upload.
+ @param bucket The destination bucket.
+ @param key Optional. Defaults to the last path component of `path`.
+ @param acl Optional. If unset it uses the global value for acl which defaults to public-read. You probably want either public-read or private. For more info check out S3CannedACL.h in aws-sdk-ios.
+ @param success A block object to be executed when the request operation finishes successfully. This block has no return value and takes a single argument: the response object from the server.
+ @param failure A block object to be executed when the request operation finishes unsuccessfully, or that finishes successfully, but encountered an error while parsing the response data. This block has no return value and takes a single argument: the `NSError` object describing error that occurred.
+ */
+- (void)postObjectWithData:(NSData *)data
+                    bucket:(NSString*)bucket
+                       key:(NSString *)key
+                       acl:(NSString*)acl
+                   success:(void (^)(S3PutObjectResponse *responseObject))success
+                   failure:(void (^)(NSError *error))failure;
 @end
