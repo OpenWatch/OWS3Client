@@ -4,33 +4,25 @@ A simple way to upload files to S3 on iOS. I wrote this because I couldn't get [
 
 ## Installation
 
-Add this as a submodule to your project or however you prefer.
+We now use Cocoapods (and you should too). Add this to your `Podfile` and you should be good to go.
 
-    $ git submodule add https://github.com/OpenWatch/OWS3Client.git Submodules/OWS3Client --recursive
+    pod 'OWS3Client'
     
-This library depends on [Amazon's SDK for iOS](https://github.com/aws/aws-sdk-ios) and is included as a Submodule.
-
-Drag `OWS3Client.xcodeproj` into your project.
-
-Add the following to your target's "Header Search Paths" in Build Settings.
-
-	$(SRCROOT)/Submodules/OWS3Client/OWS3Client/
-	$(SRCROOT)/Submodules/OWS3Client/Submodules/aws-sdk-ios/src/include/
-
-In "Build Phases" add OWS3Client to your Target Dependencies, and libOWS3Client.a to your Link Binary with Libraries step.
-
+This library depends on [Amazon's SDK for iOS](https://github.com/aws/aws-sdk-ios) and will be linked automatically by the podspec.
 
 ## Example Usage
-	
-	NSString *filePath = @"/path/to/file.txt";
-	NSString *bucketName = @"bucket-name";
-	NSString *key = @"file.txt";
-    OWS3Client *s3Client = [[OWS3Client alloc] initWithAccessKey:AWS_ACCESS_KEY_ID secretKey:AWS_SECRET_KEY];
-    [s3Client postObjectWithFile:filePath bucket:bucketName key:key acl:@"public-read" success:^(S3PutObjectResponse *responseObject) {
-                            NSLog(@"success updating manifest after uploading %@", outputFileName);
-                        } failure:^(NSError *error) {
-                            NSLog(@"error uplaoding manifest after %@", outputFileName);
-                        }];
+
+```obj-c
+NSString *filePath = @"/path/to/file.txt";
+NSString *bucketName = @"bucket-name";
+NSString *key = @"file.txt";
+   OWS3Client *s3Client = [[OWS3Client alloc] initWithAccessKey:AWS_ACCESS_KEY_ID secretKey:AWS_SECRET_KEY];
+   [s3Client postObjectWithFile:filePath bucket:bucketName key:key acl:@"public-read" success:^(S3PutObjectResponse *responseObject) {
+                           NSLog(@"success updating manifest after uploading %@", outputFileName);
+                       } failure:^(NSError *error) {
+                           NSLog(@"error uplaoding manifest after %@", outputFileName);
+                       }];
+```              
    
 ## License
 

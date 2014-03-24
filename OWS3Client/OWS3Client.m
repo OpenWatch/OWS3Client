@@ -17,6 +17,7 @@
         // Logging Control - Do NOT use logging for non-development builds.
 #ifdef DEBUG
         [AmazonLogger basicLogging];
+        [AmazonLogger turnLoggingOn];
 #else
         [AmazonLogger turnLoggingOff];
 #endif
