@@ -124,11 +124,9 @@
                    failure:(void (^)(NSError *error))failure;
 
 /**
- Adds an object to a bucket using forms.
+ Submits an S3PutObjectRequest to Amazon S3 using forms
  
- @param data The data you want to upload.
- @param bucket The destination bucket.
- @param key Optional. Defaults to the last path component of `path`.
+ @param request The S3PutObjectRequest to submit to Amazon.
  @param acl Optional. If unset it uses the global value for acl which defaults to public-read. You probably want either public-read or private. For more info check out S3CannedACL.h in aws-sdk-ios.
  @param cacheControl Optional. Can be useful for frequently-changing objects behind Cloudfront.
  @param success A block object to be executed when the request operation finishes successfully. This block has no return value and takes a single argument: the response object from the server.
