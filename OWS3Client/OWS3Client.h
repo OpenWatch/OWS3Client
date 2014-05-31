@@ -122,4 +122,20 @@
               cacheControl:(NSString*)cacheControl
                    success:(void (^)(S3PutObjectResponse *responseObject))success
                    failure:(void (^)(NSError *error))failure;
+
+/**
+ Submits an S3PutObjectRequest to Amazon S3 using forms
+ 
+ @param request The S3PutObjectRequest to submit to Amazon.
+ @param acl Optional. If unset it uses the global value for acl which defaults to public-read. You probably want either public-read or private. For more info check out S3CannedACL.h in aws-sdk-ios.
+ @param cacheControl Optional. Can be useful for frequently-changing objects behind Cloudfront.
+ @param success A block object to be executed when the request operation finishes successfully. This block has no return value and takes a single argument: the response object from the server.
+ @param failure A block object to be executed when the request operation finishes unsuccessfully, or that finishes successfully, but encountered an error while parsing the response data. This block has no return value and takes a single argument: the `NSError` object describing error that occurred.
+ */
+- (void) putS3ObjectRequest:(S3PutObjectRequest*)request
+                        acl:(NSString*)acl
+               cacheControl:(NSString *)cacheControl
+                    success:(void (^)(S3PutObjectResponse *responseObject))success
+                    failure:(void (^)(NSError *error))failure;
+
 @end
