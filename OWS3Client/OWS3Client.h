@@ -122,4 +122,11 @@
               cacheControl:(NSString*)cacheControl
                    success:(void (^)(S3PutObjectResponse *responseObject))success
                    failure:(void (^)(NSError *error))failure;
+                   
+/* Hack:: Exposed raw PUT request operation, so that custom meta data can be provided with the request (not supported by other methods) */
+- (void) putS3ObjectRequest:(S3PutObjectRequest*)request
+                        acl:(NSString*)acl
+               cacheControl:(NSString *)cacheControl
+                    success:(void (^)(S3PutObjectResponse *responseObject))success
+                    failure:(void (^)(NSError *error))failure;
 @end
